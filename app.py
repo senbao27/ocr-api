@@ -18,7 +18,7 @@ def ocr():
     
     try:
         lines = reader.readtext(tmp.name, detail=0, paragraph=True)
-        text = "\n".join(t.strip() for t in lines if t.strip())
+        text = "".join(t.strip() for t in lines if t.strip())
         return jsonify(text=text)
     finally:
         if os.path.exists(tmp.name): os.remove(tmp.name)
