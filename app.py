@@ -8,7 +8,7 @@ reader = easyocr.Reader(['en','ch_sim'])
 def health():
     return "ok"
 
-@app.route("/ocr", methods=["POST"])
+@app.route("/api/ocr", methods=["POST"])   
 def ocr():
     if 'file' not in request.files:
         return jsonify(error="no file"), 400
@@ -20,7 +20,6 @@ def ocr():
     f.save(tmp.name)
     try:
         texts = reader.readtext(tmp.name, detail=0)
-
         single_text = " ".join(t.strip() for t in texts if t.strip())
         return jsonify(text=single_text)
     finally:
