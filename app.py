@@ -15,10 +15,11 @@ def ocr():
     if f.filename == '': return jsonify(error="empty"), 400
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
     f.save(tmp.name)
+    
     try:
-        
-        text = " ".join(t.strip() for t in lines if t.strip())
-        return jsonify(text=text)
+        texts = reader.readtext(tmp.name, detail=0, paragraph=True)
+        single_text = " ".join(t.strip() for t in texts if t.strip())
+        return jsonify(text=single_text)
 
     finally:
         if os.path.exists(tmp.name): os.remove(tmp.name)
