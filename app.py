@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 import easyocr, tempfile, os
 
 app = Flask(__name__)
-reader = easyocr.Reader(['en','ch_sim'])
+reader = easyocr.Reader(['en'])
 
 @app.route("/health", methods=["GET"])
 def health():
@@ -16,8 +16,10 @@ def ocr():
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".png")
     f.save(tmp.name)
     try:
-        texts = reader.readtext(tmp.name, detail=0)
-        return jsonify(text=texts)
+        
+        text = " ".join(t.strip() for t in lines if t.strip())
+        return jsonify(text=text)
+
     finally:
         if os.path.exists(tmp.name): os.remove(tmp.name)
 
