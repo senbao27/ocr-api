@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir --upgrade pip \
  && pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch torchvision
 ENV PYTHONUNBUFFERED=1
 
-RUN python -c "import easyocr; easyocr.Reader(['en','ch_sim'])"
+RUN python -c "import easyocr; easyocr.Reader(['en'])"
 
 COPY . .
 EXPOSE 8000
